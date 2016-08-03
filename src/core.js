@@ -1,6 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 import {List, Map} from 'immutable';
 
+export const INITIAL_STATE = Map();
+
 /**
  * Set the entries for the state
  * 

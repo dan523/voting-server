@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-import {setEntries, next, vote} from './core';
+import {setEntries, next, vote, INITIAL_STATE} from './core';
 
 /**
  * Perform the action
@@ -9,7 +9,7 @@ import {setEntries, next, vote} from './core';
  * @param {any} state
  * @param {any} action
  */
-export default function reducer(state, action) {
+export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case 'SET_ENTRIES':
             return setEntries(state, action.entries);
