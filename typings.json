@@ -2,6 +2,7 @@
   "globalDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",
     "immutable": "registry:dt/immutable#3.8.1+20160608070634",
-    "redux": "registry:dt/redux#3.5.2+20160703092728"
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "socket.io": "registry:dt/socket.io#1.4.4+20160317120654"
   }
 }
