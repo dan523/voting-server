@@ -20,17 +20,45 @@ export function setEntries(state, entries) {
  * @returns
  */
 export function next(state) {
-    let entries = state.get('entries');
+    let entries = state.get('entries').concat(getWinners(state.get('vote')));
+    
     return state.merge({
         vote: Map({pair: entries.take(2)}),
         entries: entries.skip(2)
     });
 }
 
+/**
+ * Vote for the specific entry in the state
+ * 
+ * @export
+ * @param {any} state
+ * @param {string} entry
+ * @returns
+ */
 export function vote(state, entry) {
   return state.updateIn(
     ['vote', 'tally', entry],
     0,
     tally => tally + 1
   );
+}
+
+/**
+ * Check the vote tally and return the winner, or both if tied
+ * 
+ * @export
+ * @param {Map} vote
+ * @returns
+ */
+export function getWinners(vote) {
+    if (!vote) return [];
+    
+    const [a, b] = vote.get('pair');
+    const aVotes = vote.getIn(['tally', a], 0);
+    const bVotes = vote.getIn(['tally', b], 0);
+
+    if (aVotes > bVotes) return [a];
+    else if (bVotes > aVotes) return [b];
+    else return [a, b];
 }
