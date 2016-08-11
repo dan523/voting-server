@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import {setEntries, next, vote, INITIAL_STATE} from './core';
 
 /**

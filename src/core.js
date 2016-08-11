@@ -1,4 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
 import {List, Map} from 'immutable';
 
 export const INITIAL_STATE = Map();
