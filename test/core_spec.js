@@ -34,6 +34,7 @@ describe('application logic', () => {
 
             expect(nextState).to.equal(Map({
                 vote: Map({
+                    id: 0,
                     pair: List.of('Trainspotting', '28 Days Later')
                 }),
                 entries: List.of('Sunshine')
@@ -52,8 +53,9 @@ describe('application logic', () => {
                 entries: List.of('Sunshine', 'Millions', '127 Hours')
             });
             const nextState = next(state);
-            expect(nextState).to.equal(Map({
+            expect(nextState).to.equal(Map({                
                 vote: Map({
+                    id: 0,
                     pair: List.of('Sunshine', 'Millions')
                 }),
                 entries: List.of('127 Hours', 'Trainspotting')
@@ -74,6 +76,7 @@ describe('application logic', () => {
             const nextState = next(state);
                 expect(nextState).to.equal(Map({
                 vote: Map({
+                    id: 0,
                     pair: List.of('Sunshine', 'Millions')
                 }),
                 entries: List.of('127 Hours', 'Trainspotting', '28 Days Later')
@@ -94,6 +97,45 @@ describe('application logic', () => {
             const nextState = next(state);
             expect(nextState).to.equal(Map({
                 winner: 'Trainspotting'
+            }));
+        });
+
+        it('gives an initial identifier', () => {
+            const state = Map({
+                entries: List.of('Trainspotting', '28 Days Later', 'Sunshine')
+            });
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                vote: Map({
+                    id: 0,
+                    pair: List.of('Trainspotting', '28 Days Later')
+                }),
+                entries: List.of('Sunshine')
+            }));
+        });
+
+        it('gives a unique identifier', () => {
+            const state = Map({
+                vote: Map({
+                    id: 0,
+                    pair: List.of('Trainspotting', '28 Days Later'),
+                    tally: Map({
+                        'Trainspotting': 4,
+                        '28 Days Later': 2          
+                    })
+                }),
+                entries: List.of('Sunshine')
+            });
+
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                vote: Map({
+                    id: 1,
+                    pair: List.of('Sunshine', 'Trainspotting')
+                }),
+                entries: List()
             }));
         });
     });

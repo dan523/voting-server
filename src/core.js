@@ -21,15 +21,20 @@ export function setEntries(state, entries) {
  * @returns
  */
 export function next(state) {
-    let entries = state.get('entries').concat(getWinners(state.get('vote')));
+    const vote = state.get('vote');
+    let entries = state.get('entries').concat(getWinners(vote));
     if (entries.size === 1) {
         return state
             .remove('vote')
             .remove('entries')
             .set('winner', entries.first());
     } else {
+        const id = vote && vote.get('id');
         return state.merge({
-            vote: Map({pair: entries.take(2)}),
+            vote: Map({
+                id: id == undefined ? 0 : id + 1,
+                pair: entries.take(2)
+            }),
             entries: entries.skip(2)
         });
     }
@@ -47,7 +52,7 @@ export function vote(voteState, entry) {
     if (voteState.has('tally') && !voteState.hasIn(['tally', entry])) {      
         return voteState;    
     }
-    
+
     return voteState.updateIn(
         ['tally', entry],
         0,
