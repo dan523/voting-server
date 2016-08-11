@@ -44,11 +44,15 @@ export function next(state) {
  * @returns
  */
 export function vote(voteState, entry) {
-  return voteState.updateIn(
-    ['tally', entry],
-    0,
-    tally => tally + 1
-  );
+    if (voteState.has('tally') && !voteState.hasIn(['tally', entry])) {      
+        return voteState;    
+    }
+    
+    return voteState.updateIn(
+        ['tally', entry],
+        0,
+        tally => tally + 1
+    );
 }
 
 /**
